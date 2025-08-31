@@ -1,0 +1,24 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/1/Mux.hdl
+/** 
+ * Multiplexor:
+ * if (sel = 0) out = a, else out = b
+ */
+CHIP Mux {
+    IN a, b, sel;
+    OUT out;
+    /*
+    ✅ So this whole thing is just a clever wiring of NOT + AND + OR to make sure that 
+    only one input (either a or b) reaches the output, depending on sel.
+    We want:
+    If sel = 0 → output a
+    If sel = 1 → output b
+    */
+    PARTS:
+    Not(in=sel , out=notsel );
+    And(a=a , b=notsel , out=anotsel );
+    And(a=b , b=sel , out=bsel );
+    Or(a= anotsel, b=bsel , out=out );
+}
